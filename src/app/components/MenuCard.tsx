@@ -52,12 +52,12 @@ export default function MenuCard({ menu }: MenuCardProps) {
           {/* Name and Badges */}
           <div className="flex flex-col min-w-0">
             <h3 className={`font-bold text-slate-800 break-words whitespace-normal leading-snug ${!isAvailable && 'line-through opacity-70'}`}>
-              {menu.name}
               {menu.is_best_seller && (
-                <span className="ml-1.5 inline-flex items-center text-amber-500 text-sm align-middle" title="Best Seller">
+                <span className="mr-1.5 inline-flex items-center text-amber-500 text-sm align-middle" title="Best Seller">
                   ★
                 </span>
               )}
+              {menu.name}
             </h3>
             
             {/* Description */}

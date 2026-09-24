@@ -62,6 +62,13 @@ export default function EditMenuModal({ categories, menu, isOpen, onClose, onSuc
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const categoryId = formData.category_id;
+    if (!categoryId || categoryId.trim() === '') {
+      alert("Silakan pilih kategori terlebih dahulu!");
+      return;
+    }
+
     setLoading(true);
 
     try {

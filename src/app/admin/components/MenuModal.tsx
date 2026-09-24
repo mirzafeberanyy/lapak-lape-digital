@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { Category } from '@/app/components/MenuClient';
 
@@ -19,10 +19,24 @@ export default function MenuModal({ categories, isOpen, onClose, onSuccess }: Me
     name: '',
     description: '',
     price: '',
-    category_id: categories[0]?.id || '',
+    category_id: categories.length > 0 ? categories[0].id : '',
     is_best_seller: false,
     is_available: true,
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: '',
+        description: '',
+        price: '',
+        category_id: categories.length > 0 ? categories[0].id : '',
+        is_best_seller: false,
+        is_available: true,
+      });
+      setFile(null);
+    }
+  }, [isOpen, categories]);
 
   if (!isOpen) return null;
 
@@ -45,6 +59,13 @@ export default function MenuModal({ categories, isOpen, onClose, onSuccess }: Me
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const categoryId = formData.category_id;
+    if (!categoryId || categoryId.trim() === '') {
+      alert("Silakan pilih kategori terlebih dahulu!");
+      return;
+    }
+
     setLoading(true);
 
     try {
